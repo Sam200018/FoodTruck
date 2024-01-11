@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "672497405116",
+    "project_id": "foodtruck-8e2e5",
+    "storage_bucket": "foodtruck-8e2e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672497405116:android:aaf0eb52022220992b54b9",
+        "android_client_info": {
+          "package_name": "mx.ipn.escom.bautistas.foodtruck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0B8objRjKlbyJG9rJtuLon2C4J99cVSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

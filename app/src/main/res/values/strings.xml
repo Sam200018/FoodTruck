@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FoodTruck</string>
+    <string name="web_client_id">672497405116-9sfl08k7de4dheg6lk7o4d3o2mit28c1.apps.googleusercontent.com</string>
+<!--    Sing In Screen-->
+    <string name="sing_in_main_text">Sing In</string>
+    <string name="email_label">email</string>
+    <string name="password_label">contraseña</string>
+    <string name="button_sign_in_label">Iniciar Sesión</string>
+    <string name="sign_in_with_text">Iniciar sesión con...</string>
+    <string name="login_successful_text">Inicio de sesion exitoso</string>
 </resources>
