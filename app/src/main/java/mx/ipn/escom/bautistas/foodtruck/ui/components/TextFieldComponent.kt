@@ -19,6 +19,8 @@ fun TextFieldComponent(
     label: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
     readOnly: Boolean = false,
+    isError: Boolean = false,
+    errorMessage: String = "",
     onChanged: (String) -> Unit
 ) {
     Column {
@@ -30,7 +32,13 @@ fun TextFieldComponent(
             },
             readOnly = readOnly,
             modifier = modifier.fillMaxWidth(),
-            keyboardOptions = keyboardOptions
+            keyboardOptions = keyboardOptions,
+            isError = isError,
+            supportingText = {
+                if(isError){
+                    Text(text = errorMessage)
+                }
+            }
         )
         Spacer(modifier = modifier.height(5.dp))
     }
