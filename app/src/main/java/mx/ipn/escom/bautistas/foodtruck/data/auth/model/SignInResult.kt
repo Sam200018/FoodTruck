@@ -8,5 +8,16 @@ data class SignInResult(
 data class UserData(
     val userId: String,
     val userName: String?,
-    val profilePictureUri: String?
+    val profilePictureUri: String?,
+    val email: String?,
+    val userType: String?
 )
+
+fun UserData.toMap(): HashMap<String, String?> {
+    return hashMapOf(
+        "name" to userName,
+        "profilePictureUri" to profilePictureUri,
+        "email" to email,
+        "user_type" to userType
+    )
+}
