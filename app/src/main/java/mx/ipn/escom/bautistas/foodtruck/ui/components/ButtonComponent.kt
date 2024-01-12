@@ -11,9 +11,10 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ButtonComponent(
     modifier: Modifier = Modifier,
     label: String = "",
+    isEnable: Boolean = true,
     action: () -> Unit,
 ) {
-    OutlinedButton(onClick = action, modifier.fillMaxWidth()) {
+    OutlinedButton(onClick = action, modifier.fillMaxWidth(), enabled = isEnable) {
         Text(text = label)
     }
 }
@@ -21,5 +22,5 @@ fun ButtonComponent(
 @Preview(showBackground = true)
 @Composable
 fun ButtonCompPrev() {
-    ButtonComponent(){}
+    ButtonComponent() {}
 }
