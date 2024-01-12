@@ -1,11 +1,25 @@
 <resources>
     <string name="app_name">FoodTruck</string>
     <string name="web_client_id">672497405116-9sfl08k7de4dheg6lk7o4d3o2mit28c1.apps.googleusercontent.com</string>
+    <string name="logout_text">Cerrando sesion...</string>
+    <string name="loading_text">Cargando...</string>
+<!--    Errors-->
+    <string name="name_not_valid">Ingrese su nombre</string>
+    <string name="email_not_valid">Email no valido</string>
+    <string name="password_not_valid">Contraseña no valida</string>
+    <string name="password_not_match">Contraseñas no coinciden</string>
+    <string name="user_type_not_selected">No se ha seleccionado un tipo de usuario</string>
 <!--    Sing In Screen-->
-    <string name="sing_in_main_text">Sing In</string>
+    <string name="sign_in_main_text">Sing In</string>
+    <string name="name_label">nombre completo</string>
     <string name="email_label">email</string>
     <string name="password_label">contraseña</string>
     <string name="button_sign_in_label">Iniciar Sesión</string>
     <string name="sign_in_with_text">Iniciar sesión con...</string>
     <string name="login_successful_text">Inicio de sesion exitoso</string>
+<!--    Sign Up Screen-->
+    <string name="sign_up_main_text">Crear cuenta</string>
+    <string name="confirm_password_label">confirmar contraseña</string>
+    <string name="button_sign_up_label">Crear Cuenta</string>
+    <string name="sign_up_successful_text">Creacion de cuenta exitoso</string>
 </resources>
