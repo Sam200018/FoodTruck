@@ -78,6 +78,8 @@ dependencies {
     implementation("com.google.firebase:firebase-common-ktx:20.4.2")
 //    Firebase google auth
     implementation("com.google.firebase:firebase-auth")
+//    Firebase Firestore
+    implementation("com.google.firebase:firebase-firestore")
     //      Dagger hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-compiler:2.48.1")
