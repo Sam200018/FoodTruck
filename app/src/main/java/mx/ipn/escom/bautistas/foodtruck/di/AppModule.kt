@@ -5,6 +5,8 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,14 +26,20 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    @Singleton
     fun providesGoogleUIClient(
         @ApplicationContext app: Context,
-        firebaseAuth: FirebaseAuth
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore
     ): GoogleAuthUIClient = GoogleAuthUIClient(
         context = app,
         oneTapClient = Identity.getSignInClient(
             app
         ),
         firebaseAuth,
+        firebaseFirestore
     )
 }
