@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel
-    @Inject constructor(): ViewModel() {
+@Inject constructor() : ViewModel() {
 
     private val _authState = MutableStateFlow(AuthState())
     val authState = _authState.asStateFlow()
@@ -19,7 +19,7 @@ class AuthViewModel
     fun onSignInResult(result: SignInResult) {
         _authState.update {
             it.copy(
-                isSignInSuccessful = result.data != null,
+                userData = result.data,
                 errorMessage = result.errorMessage
             )
         }
