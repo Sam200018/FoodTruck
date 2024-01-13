@@ -50,5 +50,45 @@ class SignUpDataSource @Inject constructor(
             )
         }
     }
+
+    suspend fun signInWithEmailAndPassword(email: String, password: String): SignInResult {
+        return try {
+            val user = auth.signInWithEmailAndPassword(email, password).await().user
+            SignInResult(
+                data = user?.run {
+                    val userDoc = db.collection("users").document(uid).get().await()
+
+                    if (userDoc.exists()) {
+                        val infoMap = userDoc["info"] as? HashMap<String, String?> ?: hashMapOf()
+                        val userData = UserData(
+                            userId = uid,
+                            userName = infoMap["name"],
+                            profilePictureUri = infoMap["profilePictureUri"],
+                            email = infoMap["email"],
+                            userType = infoMap["user_type"]
+                        )
+                        userData
+                    } else {
+                        val userData = UserData(
+                            userId = uid,
+                            userName = this.displayName,
+                            profilePictureUri = photoUrl?.toString(),
+                            email = this.email,
+                            userType = null
+                        )
+                        userData
+                    }
+                },
+                errorMessage = null
+            )
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            if (e is CancellationException) throw e
+            SignInResult(
+                data = null, errorMessage = e.message
+            )
+        }
+    }
 }
 
