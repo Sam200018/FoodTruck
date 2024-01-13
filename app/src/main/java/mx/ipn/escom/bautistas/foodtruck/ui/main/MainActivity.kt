@@ -22,6 +22,7 @@ import mx.ipn.escom.bautistas.foodtruck.R
 import mx.ipn.escom.bautistas.foodtruck.data.auth.model.GoogleAuthUIClient
 import mx.ipn.escom.bautistas.foodtruck.data.auth.model.SignInResult
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.AuthViewModel
+import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignInViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignUpViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.HomeScreen
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.Routes
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                 val authViewModel: AuthViewModel by viewModels()
                 val state by authViewModel.authState.collectAsStateWithLifecycle()
 
-                val startDestination = if (state.isSignInSuccessful) {
+                val startDestination = if (state.userData != null) {
                     Routes.HomeScreen.route
                 } else {
                     Routes.SignInScreen.route
@@ -61,7 +62,7 @@ class MainActivity : ComponentActivity() {
                                 authViewModel.onSignInResult(
                                     SignInResult(
                                         googleAuthUIClient.getSignedInUser(),
-                                        errorMessage = ""
+                                        errorMessage = null
                                     )
                                 )
                             }
@@ -83,8 +84,8 @@ class MainActivity : ComponentActivity() {
                             }
                         )
 
-                        LaunchedEffect(key1 = state.isSignInSuccessful) {
-                            if (state.isSignInSuccessful) {
+                        LaunchedEffect(key1 = state.userData) {
+                            if (state.userData != null) {
                                 Toast.makeText(
                                     applicationContext,
                                     R.string.login_successful_text,
@@ -93,23 +94,35 @@ class MainActivity : ComponentActivity() {
                             }
                         }
 
-                        SignInScreen(state = state, onSignIn = {}, onGoogleSignIn = {
-                            lifecycleScope.launch {
-                                val signinIntentSender = googleAuthUIClient.signIn()
-                                launcher.launch(
-                                    IntentSenderRequest.Builder(
-                                        signinIntentSender ?: return@launch
-                                    ).build()
-                                )
-                            }
-                        }, navigateToSignUp = {
-                            navController.navigate(Routes.SignupScreen.route)
-                        })
+                        val signInViewModel: SignInViewModel by viewModels()
+
+                        SignInScreen(
+                            signInViewModel = signInViewModel,
+                            authState = state, onSignIn = {
+                                signInViewModel.signIn {
+                                    authViewModel.onSignInResult(it)
+                                    signInViewModel.clearFields()
+                                }
+                                signInViewModel.resetState()
+                            }, onGoogleSignIn = {
+                                lifecycleScope.launch {
+                                    val signinIntentSender = googleAuthUIClient.signIn()
+                                    launcher.launch(
+                                        IntentSenderRequest.Builder(
+                                            signinIntentSender ?: return@launch
+                                        ).build()
+                                    )
+                                }
+                            }, navigateToSignUp = {
+                                navController.navigate(Routes.SignupScreen.route)
+                            })
 
                     }
 
                     composable(Routes.HomeScreen.route) {
-                        HomeScreen() {
+                        HomeScreen(
+                            authState= state
+                        ) {
                             lifecycleScope.launch {
                                 googleAuthUIClient.signOut()
                                 Toast.makeText(
@@ -140,8 +153,8 @@ class MainActivity : ComponentActivity() {
                             }
                         )
 
-                        LaunchedEffect(key1 = state.isSignInSuccessful) {
-                            if (state.isSignInSuccessful) {
+                        LaunchedEffect(key1 = state.userData) {
+                            if (state.userData != null) {
                                 Toast.makeText(
                                     applicationContext,
                                     R.string.login_successful_text,
