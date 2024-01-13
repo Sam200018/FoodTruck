@@ -95,7 +95,7 @@ class GoogleAuthUIClient(
 
                 UserData(
                     userId = uid,
-                    userName = displayName,
+                    userName = infoMap["name"],
                     profilePictureUri = infoMap["profilePictureUri"],
                     email = email,
                     userType = infoMap["user_type"]
