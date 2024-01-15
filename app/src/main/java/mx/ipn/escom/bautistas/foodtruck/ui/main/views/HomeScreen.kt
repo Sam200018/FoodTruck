@@ -10,27 +10,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import mx.ipn.escom.bautistas.foodtruck.ui.components.ButtonComponent
+import mx.ipn.escom.bautistas.foodtruck.ui.components.UserTypeSelector
 import mx.ipn.escom.bautistas.foodtruck.ui.main.interaction.AuthState
+import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.AuthViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     authState: AuthState,
+    authViewModel: AuthViewModel,
     signOut: () -> Unit,
 ) {
-    when (authState.userData!!.userType) {
+    when (authState.userData?.userType) {
         null -> {
-            SelectType(signOut = signOut)
+            SelectType(authViewModel = authViewModel, signOut = signOut)
         }
 
         "Cliente" -> {
             Orders() {
-                signOut
+                signOut()
             }
         }
 
         "Empleado" -> {
-            TODO("Cambiar el nombre del composable por lo que vaya pasar aqui")
             Empleado()
         }
 
@@ -41,6 +45,7 @@ fun HomeScreen(
 @Composable
 fun SelectType(
     modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel,
     signOut: () -> Unit,
 ) {
     Scaffold {
@@ -49,14 +54,16 @@ fun SelectType(
                 .padding(it)
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
-            Column {
-                Text(text = "Cliente")
-                Button(onClick = {
-                    signOut()
-                }) {
-                    Text(text = "Cerrar sesion")
+            Column(modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Iniciaste sesion con Google!")
+                Text(text = "Por favor selecciona el tipo de usuario")
+                UserTypeSelector(
+                    value = authViewModel.userType, onSelectOption = {
+                        authViewModel.onUserTypeChange(it)
+                    })
+                ButtonComponent(label = "Continuar", isEnable = authViewModel.userType.isNotEmpty()) {
+                    authViewModel.updateUserInfo()
                 }
-
             }
         }
     }
@@ -72,7 +79,7 @@ fun Orders(
                 .padding(it)
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
-            Column {
+            Column() {
                 Text(text = "Cliente")
                 Button(onClick = {
                     signOut()
