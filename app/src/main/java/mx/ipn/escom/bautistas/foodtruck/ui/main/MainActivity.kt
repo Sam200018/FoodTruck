@@ -121,7 +121,8 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.HomeScreen.route) {
                         HomeScreen(
-                            authState= state
+                            authState= state,
+                            authViewModel = authViewModel
                         ) {
                             lifecycleScope.launch {
                                 googleAuthUIClient.signOut()
