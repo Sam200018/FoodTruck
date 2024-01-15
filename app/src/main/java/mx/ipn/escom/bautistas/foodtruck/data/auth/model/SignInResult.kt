@@ -10,7 +10,7 @@ data class UserData(
     val userName: String?,
     val profilePictureUri: String?,
     val email: String?,
-    val userType: String?
+    var userType: String?
 )
 
 fun UserData.toMap(): HashMap<String, String?> {
