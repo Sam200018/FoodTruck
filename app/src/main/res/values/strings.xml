@@ -22,4 +22,12 @@
     <string name="confirm_password_label">confirmar contraseña</string>
     <string name="button_sign_up_label">Crear Cuenta</string>
     <string name="sign_up_successful_text">Creacion de cuenta exitoso</string>
+<!--    Home Screen-->
+    <string name="home_main_text">Iniciaste sesion con Google!</string>
+    <string name="select_user_type_text">Por favor selecciona el tipo de usuario</string>
+    <string name="continue_label_text">Continuar</string>
+<!--    Order Screen-->
+    <string name="amount_label">Cantidad</string>
+    <string name="building_label">Edificio</string>
+    <string name="comment_label">Comentario</string>
 </resources>
