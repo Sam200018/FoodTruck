@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +29,7 @@ fun HomeScreen(
     authState: AuthState,
     authViewModel: AuthViewModel,
     mapViewModel: MapViewModel,
+    goToNewOrder: () -> Unit,
     signOut: () -> Unit,
 ) {
     when (authState.userData?.userType) {
@@ -34,7 +39,7 @@ fun HomeScreen(
 
         "Cliente" -> {
             Orders(
-                modifier = modifier, signOut = signOut
+                modifier = modifier, goToNewOrder,signOut = signOut
             )
         }
 
@@ -81,9 +86,17 @@ fun SelectType(
 
 @Composable
 fun Orders(
-    modifier: Modifier = Modifier, signOut: () -> Unit
+    modifier: Modifier = Modifier,
+    goToNewOrder: () -> Unit,
+    signOut: () -> Unit,
 ) {
-    Scaffold {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = goToNewOrder) {
+                Icon(Icons.Filled.Add, contentDescription = "")
+            }
+        }
+    ) {
         Box(
             modifier
                 .padding(it)
