@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import mx.ipn.escom.bautistas.foodtruck.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductSelectorComponent(
     modifier: Modifier = Modifier,
