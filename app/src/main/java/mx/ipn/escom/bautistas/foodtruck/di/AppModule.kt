@@ -2,6 +2,8 @@ package mx.ipn.escom.bautistas.foodtruck.di
 
 import android.content.Context
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -27,6 +29,12 @@ object AppModule {
     @Provides
     @Singleton
     fun providesFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    @Singleton
+    fun providesLocationService(
+        @ApplicationContext context: Context
+    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
     @Provides
     @Singleton
