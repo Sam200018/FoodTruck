@@ -15,12 +15,14 @@ import mx.ipn.escom.bautistas.foodtruck.ui.components.ButtonComponent
 import mx.ipn.escom.bautistas.foodtruck.ui.components.UserTypeSelector
 import mx.ipn.escom.bautistas.foodtruck.ui.main.interaction.AuthState
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.AuthViewModel
+import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.MapViewModel
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     authState: AuthState,
     authViewModel: AuthViewModel,
+    mapViewModel: MapViewModel,
     signOut: () -> Unit,
 ) {
     when (authState.userData?.userType) {
@@ -29,13 +31,17 @@ fun HomeScreen(
         }
 
         "Cliente" -> {
-            Orders() {
-                signOut()
-            }
+            Orders(
+                modifier = modifier, signOut = signOut
+            )
         }
 
         "Empleado" -> {
-            Empleado()
+            Empleado(
+                modifier = modifier,
+                signOut = signOut,
+                mapViewModel = mapViewModel
+            )
         }
 
     }
@@ -92,7 +98,36 @@ fun Orders(
     }
 }
 
+
 @Composable
-fun Empleado() {
-    Text(text = "Aqui va lo de empleado")
+fun Empleado(
+    modifier: Modifier = Modifier,
+    signOut: () -> Unit,
+    mapViewModel: MapViewModel,
+) {
+    Scaffold {
+        Box(
+            modifier
+                .padding(it)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier.padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Empleado")
+
+                Button(onClick = { signOut() }) {
+                    Text(text = "Cerrar sesion")
+                }
+                MapScreen(
+                    state = mapViewModel.state.value, // Obtiene el estado del mapa desde el ViewModel
+                    setupClusterManager = mapViewModel::setupClusterManager,
+                    calculateZoneViewCenter = mapViewModel::calculateZoneLatLngBounds
+                )
+            }
+        }
+    }
 }
+

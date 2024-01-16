@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -127,12 +126,12 @@ fun MapScreen(
                 Text("Direccion")
 
                 // Botón de entrega con contador de clics
-                Button(onClick = {
+/*                Button(onClick = {
                     buttonClickCount++
                     println("Botón clickeado $buttonClickCount veces")
                 }) {
                     Text("Entregar")
-                }
+                }*/
             }
         }
     }
