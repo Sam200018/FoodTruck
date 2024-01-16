@@ -27,7 +27,7 @@ fun HomeScreen(
 ) {
     when (authState.userData?.userType) {
         null -> {
-            SelectType(authViewModel = authViewModel, signOut = signOut)
+            SelectType(authViewModel = authViewModel)
         }
 
         "Cliente" -> {
@@ -52,7 +52,6 @@ fun HomeScreen(
 fun SelectType(
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel,
-    signOut: () -> Unit,
 ) {
     Scaffold {
         Box(
