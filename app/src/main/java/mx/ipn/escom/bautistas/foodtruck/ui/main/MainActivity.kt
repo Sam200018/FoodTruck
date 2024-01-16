@@ -22,6 +22,7 @@ import mx.ipn.escom.bautistas.foodtruck.R
 import mx.ipn.escom.bautistas.foodtruck.data.auth.model.GoogleAuthUIClient
 import mx.ipn.escom.bautistas.foodtruck.data.auth.model.SignInResult
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.AuthViewModel
+import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.MapViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignInViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignUpViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.HomeScreen
@@ -45,6 +46,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val authViewModel: AuthViewModel by viewModels()
                 val state by authViewModel.authState.collectAsStateWithLifecycle()
+                val mapViewModel: MapViewModel by viewModels()
 
                 val startDestination = if (state.userData != null) {
                     Routes.HomeScreen.route
@@ -122,7 +124,8 @@ class MainActivity : ComponentActivity() {
                     composable(Routes.HomeScreen.route) {
                         HomeScreen(
                             authState= state,
-                            authViewModel = authViewModel
+                            authViewModel = authViewModel,
+                            mapViewModel = mapViewModel
                         ) {
                             lifecycleScope.launch {
                                 googleAuthUIClient.signOut()
