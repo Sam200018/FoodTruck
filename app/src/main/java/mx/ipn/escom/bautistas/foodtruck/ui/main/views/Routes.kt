@@ -6,4 +6,5 @@ sealed class Routes (
     data object HomeScreen: Routes(route = "/home")
     data object SignInScreen: Routes(route = "/sign_in")
     data object SignupScreen: Routes(route = "/sign_up")
+    data object NewOrderScreen: Routes(route = "/new_order")
 }
