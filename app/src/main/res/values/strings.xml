@@ -27,7 +27,12 @@
     <string name="select_user_type_text">Por favor selecciona el tipo de usuario</string>
     <string name="continue_label_text">Continuar</string>
 <!--    Order Screen-->
+    <string name="making_order_main_text">Crea una orden</string>
+    <string name="select_product">Selecciona tu producto</string>
+    <string name="select_school">Selecciona tu escuela</string>
     <string name="amount_label">Cantidad</string>
     <string name="building_label">Edificio</string>
     <string name="comment_label">Comentario</string>
+    <string name="order_destiny">Destino del pedido</string>
+    <string name="submit_order_label">Realizar pedido</string>
 </resources>
