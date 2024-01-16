@@ -1,5 +1,7 @@
 package mx.ipn.escom.bautistas.foodtruck.ui.main
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -11,11 +13,13 @@ import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.location.FusedLocationProviderClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import mx.ipn.escom.bautistas.foodtruck.R
@@ -23,9 +27,11 @@ import mx.ipn.escom.bautistas.foodtruck.data.auth.model.GoogleAuthUIClient
 import mx.ipn.escom.bautistas.foodtruck.data.auth.model.SignInResult
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.AuthViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.MapViewModel
+import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.OrderViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignInViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignUpViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.HomeScreen
+import mx.ipn.escom.bautistas.foodtruck.ui.main.views.OrderScreen
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.Routes
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.SignInScreen
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.SignUpScreen
@@ -35,12 +41,37 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+//                viewModel.getDeviceLocation(fusedLocationProviderClient)
+            }
+        }
+
+    private fun askPermissions() = when {
+        ContextCompat.checkSelfPermission(
+            this,
+            ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED -> {
+//            viewModel.getDeviceLocation(fusedLocationProviderClient)
+        }
+        else -> {
+            requestPermissionLauncher.launch(ACCESS_FINE_LOCATION)
+        }
+    }
     @Inject
     lateinit var googleAuthUIClient: GoogleAuthUIClient
+    @Inject
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        askPermissions()
         setContent {
             FoodTruckTheme {
                 val navController = rememberNavController()
@@ -123,9 +154,13 @@ class MainActivity : ComponentActivity() {
 
                     composable(Routes.HomeScreen.route) {
                         HomeScreen(
-                            authState= state,
+                            authState = state,
                             authViewModel = authViewModel,
-                            mapViewModel = mapViewModel
+                            mapViewModel = mapViewModel,
+                            goToNewOrder = {
+                                navController.navigate(Routes.NewOrderScreen.route)
+                            }
+
                         ) {
                             lifecycleScope.launch {
                                 googleAuthUIClient.signOut()
@@ -192,6 +227,15 @@ class MainActivity : ComponentActivity() {
                                     ).build()
                                 )
                             }
+                        }
+                    }
+
+                    composable(Routes.NewOrderScreen.route) {
+                        val orderViewModel: OrderViewModel by viewModels()
+                        OrderScreen(
+                            orderViewModel = orderViewModel
+                        ) {
+                            navController.popBackStack()
                         }
                     }
                 }
