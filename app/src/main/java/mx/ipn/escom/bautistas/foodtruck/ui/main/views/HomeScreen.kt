@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import mx.ipn.escom.bautistas.foodtruck.R
 import mx.ipn.escom.bautistas.foodtruck.ui.components.ButtonComponent
 import mx.ipn.escom.bautistas.foodtruck.ui.components.UserTypeSelector
 import mx.ipn.escom.bautistas.foodtruck.ui.main.interaction.AuthState
@@ -55,13 +57,16 @@ fun SelectType(
                 .fillMaxSize(), contentAlignment = Alignment.Center
         ) {
             Column(modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "Iniciaste sesion con Google!")
-                Text(text = "Por favor selecciona el tipo de usuario")
+                Text(text = stringResource(id = R.string.home_main_text))
+                Text(text = stringResource(id = R.string.select_user_type_text))
                 UserTypeSelector(
                     value = authViewModel.userType, onSelectOption = {
                         authViewModel.onUserTypeChange(it)
                     })
-                ButtonComponent(label = "Continuar", isEnable = authViewModel.userType.isNotEmpty()) {
+                ButtonComponent(
+                    label = stringResource(id = R.string.continue_label_text),
+                    isEnable = authViewModel.userType.isNotEmpty()
+                ) {
                     authViewModel.updateUserInfo()
                 }
             }
