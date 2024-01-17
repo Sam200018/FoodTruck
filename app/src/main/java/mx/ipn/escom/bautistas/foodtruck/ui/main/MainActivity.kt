@@ -28,6 +28,7 @@ import mx.ipn.escom.bautistas.foodtruck.data.auth.model.SignInResult
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.AuthViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.MapViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.OrderViewModel
+import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.OrdersViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignInViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.viewmodels.SignUpViewModel
 import mx.ipn.escom.bautistas.foodtruck.ui.main.views.HomeScreen
@@ -153,8 +154,12 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(Routes.HomeScreen.route) {
+                        val ordersViewModel: OrdersViewModel by viewModels()
+
+                        ordersViewModel.getAll()
                         HomeScreen(
                             authState = state,
+                            ordersViewModel = ordersViewModel,
                             authViewModel = authViewModel,
                             mapViewModel = mapViewModel,
                             goToNewOrder = {
