@@ -26,6 +26,7 @@
     <string name="home_main_text">Iniciaste sesion con Google!</string>
     <string name="select_user_type_text">Por favor selecciona el tipo de usuario</string>
     <string name="continue_label_text">Continuar</string>
+    <string name="orders_main_text">Pedidos</string>
 <!--    Order Screen-->
     <string name="making_order_main_text">Crea una orden</string>
     <string name="select_product">Selecciona tu producto</string>
